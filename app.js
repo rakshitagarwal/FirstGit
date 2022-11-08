@@ -1,37 +1,61 @@
-// //queryselector--single element
+//DOM traversal
 
-// const secondli = document.querySelector(".list-group-item:nth-child(2)");
-// console.log(secondli);
-// secondli.style.backgroundColor = "green";
+const title = document.querySelector(".title");
+console.log(title);
 
-// document.querySelector(".list-group-item:nth-child(3)").style.display = "none";
+//parent Element
 
-// const input = document.querySelector("input");
-// input.setAttribute("placeholder", "enter item");
+console.log(title.parentElement);
+title.parentElement.style.backgroundColor = "#eee";
 
-// const submit = document.querySelector("input[type='submit']"); // or can use input:last-child
-// submit.value = "Add item";
-// console.log(submit);
+//child element-->use children
 
-// const li = document.querySelector(".list-group-item"); //selecs the first li only since it is querySelector
-// li.style.color = "red";
-// console.log(li);
+const list = document.querySelector(".list-group");
+console.log(list.children);
 
-//querSelectorAll--multiple elements
+list.children[0].innerText = "Hi there!";
 
-const ul = document.querySelectorAll(".list-group-item"); // .list-group-item
-console.log(ul);
+//childNode gives the empty text node as well
+//console.log(list.childNodes);
 
-ul[1].style.fontColor = "green";
+//siblings  nextElementSibling & previousElementSibling
 
-// //change the color for all even elements
-// for (let i = 1; i < ul.length; i = i + 2) {
-//   ul[i].style.backgroundColor = "yellow";
-// }
+console.log(title.nextElementSibling); //gives the form
+console.log(title.nextElementSibling.children); //gives the input and submit
 
-//choosing only the odd elements of ul and then adding style
-const oddUl = document.querySelectorAll(".list-group-item:nth-child(odd)");
-for (const li of oddUl) {
-  li.style.backgroundColor = "green";
-}
-console.log(oddUl);
+console.log(title.previousElementSibling); //null as there is no previous sibling element
+console.log(list.previousElementSibling); //gives h2 with item list
+
+//fistElementChild and lastElementChild
+
+console.log(list.firstElementChild); //1st li
+console.log(list.lastElementChild); //last li
+console.log(list.children[2]); //gets the 3rd li
+
+//DOM element creation
+let p = document.createElement("p"); //create element
+
+//Adding a text node to new element
+p.appendChild(document.createTextNode("Thanks for filling")); //add text node
+
+//adding the new element to DOM
+list.insertAdjacentElement("afterend", p); //inset in DOM
+
+const container = document.querySelector(".container");
+//create element
+const newDiv = document.createElement("div");
+//add text node
+newDiv.appendChild(document.createTextNode("Hello world"));
+console.log(newDiv);
+//adding styles to element
+newDiv.style.fontSize = "18px";
+newDiv.style.fontWeight = "bold";
+//adding element to DOM
+container.insertAdjacentElement("afterbegin", newDiv);
+
+//sharpener task add hello
+
+const div = document.createElement("div");
+div.appendChild(document.createTextNode("Hello Word...!"));
+
+list.insertAdjacentElement("beforebegin", div);
