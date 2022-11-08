@@ -55,6 +55,7 @@
     color: white;
     padding: 4px;
     margin-bottom: 10px;
+    display: none;
   }
   .edit {
     background-color: lightgray;
