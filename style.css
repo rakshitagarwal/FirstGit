@@ -56,3 +56,17 @@
     padding: 4px;
     margin-bottom: 10px;
   }
+  .edit {
+    background-color: lightgray;
+    padding: 5px 10px;
+    float: right;
+    margin-right: 10px;
+  
+    border: none;
+  }
+  .del {
+    background-color: orangered;
+    padding: 5px 10px;
+    float: right;
+    border: none;
+  }
