@@ -1,61 +1,60 @@
-//DOM traversal
+//adding new list item and deleting them
 
-const title = document.querySelector(".title");
-console.log(title);
+//selecting form
+const form = document.querySelector(".form-inline");
+//selecting ul
+const list = document.querySelector("#items");
 
-//parent Element
+const onsubmit = (e) => {
+  e.preventDefault();
+  //getting the value of input
+  const input = document.querySelector("#input-item").value;
+  //creating li
+  const li = document.createElement("li");
+  //creating text node for li
+  li.appendChild(document.createTextNode(input));
+  //adding class name
+  li.className = "list-group-item";
+  //creating delete button
+  const delButn = document.createElement("button");
+  //adding text
+  delButn.innerText = "X";
+  //adding class
+  delButn.className = "del btn btn-danger btn-sm rounded-0 float-right";
+  //creating edit button
+  const editButn = document.createElement("button");
+  //adding text node to edit
+  editButn.appendChild(document.createTextNode("Edit"));
+  //adding class to edit
+  editButn.className = "edit btn btn-light btn-sm rounded-0 float-right mr-3";
+  //appending the delButn to end of li
+  li.insertAdjacentElement("beforeend", delButn);
+  //appending the editButn to end of li
+  li.insertAdjacentElement("beforeend", editButn);
+  //appending the li to the fist
+  list.insertAdjacentElement("beforeend", li);
+  //seting the first child i.e input value to ""
+  e.target.children[0].value = "";
+};
 
-console.log(title.parentElement);
-title.parentElement.style.backgroundColor = "#eee";
+// console.log(list.classList.contains("del"));
+const deleteList = (e) => {
+  e.preventDefault();
+  //deleting only when the delete button is clicked ;
+  //e.target gives the node which is clicked here it is the delete button
+  // console.log(e.target.classList);-->gives array of class names used for the e.target
+  if (e.target.classList.contains("del")) {
+    //confirm()-->popup display
+    if (confirm("are you sure?")) {
+      const li = e.target.parentElement;
+      li.remove();
+    }
+  }
 
-//child element-->use children
-
-const list = document.querySelector(".list-group");
-console.log(list.children);
-
-list.children[0].innerText = "Hi there!";
-
-//childNode gives the empty text node as well
-//console.log(list.childNodes);
-
-//siblings  nextElementSibling & previousElementSibling
-
-console.log(title.nextElementSibling); //gives the form
-console.log(title.nextElementSibling.children); //gives the input and submit
-
-console.log(title.previousElementSibling); //null as there is no previous sibling element
-console.log(list.previousElementSibling); //gives h2 with item list
-
-//fistElementChild and lastElementChild
-
-console.log(list.firstElementChild); //1st li
-console.log(list.lastElementChild); //last li
-console.log(list.children[2]); //gets the 3rd li
-
-//DOM element creation
-let p = document.createElement("p"); //create element
-
-//Adding a text node to new element
-p.appendChild(document.createTextNode("Thanks for filling")); //add text node
-
-//adding the new element to DOM
-list.insertAdjacentElement("afterend", p); //inset in DOM
-
-const container = document.querySelector(".container");
-//create element
-const newDiv = document.createElement("div");
-//add text node
-newDiv.appendChild(document.createTextNode("Hello world"));
-console.log(newDiv);
-//adding styles to element
-newDiv.style.fontSize = "18px";
-newDiv.style.fontWeight = "bold";
-//adding element to DOM
-container.insertAdjacentElement("afterbegin", newDiv);
-
-//sharpener task add hello
-
-const div = document.createElement("div");
-div.appendChild(document.createTextNode("Hello Word...!"));
-
-list.insertAdjacentElement("beforebegin", div);
+  //for edditing the list item in future
+  if (e.target.classList.contains("edit")) {
+    console.log("editting");
+  }
+};
+form.addEventListener("submit", onsubmit);
+list.addEventListener("click", deleteList);
