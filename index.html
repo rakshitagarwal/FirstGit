@@ -15,22 +15,49 @@
   <body>
     <header id="main-header" class="bg-success text-white p-4 mb-3">
       <div class="container">
-        <h1 id="header-title">
-          Item Lister
-          <span style="display: none">123</span>
-        </h1>
+        <div class="row">
+          <div class="col-md-6">
+            <h1 id="header-title" style="display: flex">Item Lister</h1>
+          </div>
+          <div class="col-md-6 align-self-centre">
+            <input
+              type="text"
+              id="input-search"
+              class="form-control"
+              placeholder="search items..."
+            />
+          </div>
+        </div>
       </div>
     </header>
     <div class="container">
       <div id="main" class="card card-body">
         <h2 class="title">Add Items</h2>
         <form class="form-inline mb-3">
-          <input type="text" id="input-item" class="form-control mr-2" />
+          <input
+            type="text"
+            id="input-item"
+            class="form-control mr-2"
+            placeholder="Item Name"
+          />
+          <input
+            type="text"
+            id="input-description"
+            class="form-control mr-2"
+            placeholder="Item desciption"
+          />
           <input type="submit" class="btn btn-dark" value="Submit" />
         </form>
+        <div
+          class="msg text-bg-warning p-1"
+          style="background-color: orange; display: none"
+        >
+          Enter all fileds
+        </div>
+
         <h2 class="title">Items</h2>
         <ul id="items" class="list-group">
-          <li class="list-group-item">
+          <!-- <li class="list-group-item">
             Item 1
             <button class="del btn btn-danger btn-sm rounded-0 float-right">
               X</button
@@ -38,43 +65,7 @@
               class="edit btn btn-light btn-sm rounded-0 float-right mr-3"
             >
               Edit
-            </button>
-          </li>
-          <li class="list-group-item">
-            Item 2<button
-              class="del btn btn-danger btn-sm rounded-0 float-right"
-            >
-              X
-            </button>
-            <button
-              class="edit btn btn-light btn-sm rounded-0 float-right mr-3"
-            >
-              Edit
-            </button>
-          </li>
-          <li class="list-group-item">
-            Item 3<button
-              class="del btn btn-danger btn-sm rounded-0 float-right"
-            >
-              X
-            </button>
-            <button
-              class="edit btn btn-light btn-sm rounded-0 float-right mr-3"
-            >
-              Edit
-            </button>
-          </li>
-          <li class="list-group-item">
-            Item 4<button
-              class="del btn btn-danger btn-sm rounded-0 float-right"
-            >
-              X
-            </button>
-            <button
-              class="edit btn btn-light btn-sm rounded-0 float-right mr-3"
-            >
-              Edit
-            </button>
+            </button> -->
           </li>
         </ul>
       </div>

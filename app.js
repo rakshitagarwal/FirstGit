@@ -1,40 +1,65 @@
-//adding new list item and deleting them
+//addinf filter functionality
 
 //selecting form
 const form = document.querySelector(".form-inline");
 //selecting ul
 const list = document.querySelector("#items");
 
+//selcect the serach input
+const search = document.querySelector("#input-search");
+
+const filter = (e) => {
+  const searchText = e.target.value.toLowerCase();
+  const listArr = list.querySelectorAll("li"); //nodelist of li
+  console.log(listArr);
+  listArr.forEach((el) => {
+    const liItem = el.firstChild.textContent.toLowerCase().trim(); //important
+    const liDescription = el.childNodes[1].textContent.toLowerCase().trim();
+    // console.log(liItem, liDescription);
+    //liItem.indexOf(searchText) != -1 can use when the below way of appending is done---*** since it has both liItem and liDescription in one text node
+    if (
+      liItem.indexOf(searchText) != -1 ||
+      liDescription.indexOf(searchText) != -1
+    ) {
+      el.style.display = "block";
+    } else {
+      el.style.display = "none";
+    }
+  });
+};
+
 const onsubmit = (e) => {
   e.preventDefault();
-  //getting the value of input
-  const input = document.querySelector("#input-item").value;
-  //creating li
-  const li = document.createElement("li");
-  //creating text node for li
-  li.appendChild(document.createTextNode(input));
-  //adding class name
-  li.className = "list-group-item";
-  //creating delete button
-  const delButn = document.createElement("button");
-  //adding text
-  delButn.innerText = "X";
-  //adding class
-  delButn.className = "del btn btn-danger btn-sm rounded-0 float-right";
-  //creating edit button
-  const editButn = document.createElement("button");
-  //adding text node to edit
-  editButn.appendChild(document.createTextNode("Edit"));
-  //adding class to edit
-  editButn.className = "edit btn btn-light btn-sm rounded-0 float-right mr-3";
-  //appending the delButn to end of li
-  li.insertAdjacentElement("beforeend", delButn);
-  //appending the editButn to end of li
-  li.insertAdjacentElement("beforeend", editButn);
-  //appending the li to the fist
-  list.insertAdjacentElement("beforeend", li);
-  //seting the first child i.e input value to ""
-  e.target.children[0].value = "";
+  console.log(e.target);
+  const item = document.querySelector("#input-item").value;
+  const description = document.querySelector("#input-description").value;
+  if (item != "" && description != "") {
+    const li = document.createElement("li");
+    li.className = "list-group-item";
+    li.appendChild(document.createTextNode(`${item}:`));
+    li.appendChild(document.createTextNode(`${description}`));
+    //li.appendChild(document.createTextNode(`${item}: ${description}`)); //better way since first child will be the entire text when searching---***
+
+    const removeBtn = document.createElement("button");
+    removeBtn.appendChild(document.createTextNode("X"));
+    removeBtn.className = "del btn btn-danger btn-sm rounded-0 float-right";
+    li.insertAdjacentElement("beforeend", removeBtn);
+
+    const editBtn = document.createElement("button");
+    editBtn.appendChild(document.createTextNode("Edit"));
+    editBtn.className = "edit btn btn-light btn-sm rounded-0 float-right mr-3";
+    li.insertAdjacentElement("beforeend", editBtn);
+
+    list.insertAdjacentElement("beforeend", li);
+    e.target.children[0].value = "";
+    e.target.children[1].value = "";
+  } else {
+    const msg = document.querySelector(".msg");
+    msg.style.display = "block";
+    setTimeout(() => {
+      msg.style.display = "none";
+    }, 2000);
+  }
 };
 
 // console.log(list.classList.contains("del"));
@@ -58,3 +83,4 @@ const deleteList = (e) => {
 };
 form.addEventListener("submit", onsubmit);
 list.addEventListener("click", deleteList);
+search.addEventListener("keyup", filter);
