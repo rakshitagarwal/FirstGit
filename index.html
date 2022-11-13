@@ -4,131 +4,65 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+      crossorigin="anonymous"
+    />
+
+    <title>Expense Tracker</title>
   </head>
   <body>
-    <script>
-      //promise chaining below:
-      // const promiseGetTicket = new Promise((resolve, reject) => {
-      //   setTimeout(() => {
-      //     console.log("got tickets");
-      //     return resolve("ticket");
-      //   }, 5000);
-      // });
-      // const getFood = promiseGetTicket.then((m) => {
-      //   return new Promise((resolve, reject) => {
-      //     setTimeout(() => {
-      //       console.log("got food");
-      //       return resolve(`${m} food`);
-      //     }, 3000);
-      //   });
-      // });
-
-      // const getWater = getFood.then((m) => {
-      //   return new Promise((resolve, reject) => {
-      //     setTimeout(() => {
-      //       console.log("got water");
-      //       resolve(`${m} water`);
-      //     }, 5000);
-      //   });
-      // });
-
-      //*** ALWAYS RETURN THE PROMISE INSIDE .then ; promise chaining below ticket-->food--->water-->going to movies finally
-      // const all = new Promise((resolve, reject) => {
-      //   setTimeout(() => {
-      //     console.log("got tickets");
-      //     resolve("ticket");
-      //   }, 5000);
-      // })
-      //   .then((m) => {
-      //     return new Promise((resolve, reject) => {
-      //       setTimeout(() => {
-      //         console.log("got food");
-      //         resolve(`${m}, food`);
-      //       }, 3000);
-      //     });
-      //   })
-      //   .then((m) => {
-      //     return new Promise((resolve, reject) => {
-      //       setTimeout(() => {
-      //         console.log("got water");
-      //         resolve(`${m}, water`);
-      //       }, 5000);
-      //     });
-      //   });
-      // all
-      //   .then((m) => {
-      //     return new Promise((resolve, reject) => {
-      //       setTimeout(() => {
-      //         console.log("going to movies");
-      //         resolve(`${m}, Going to movies Finally!!`);
-      //       }, 2000);
-      //     });
-      //   })
-      //   .then((m) => console.log(m));
-
-      //promise chaing below -->getticket-->getpopcorn-->getbutter
-      // const getTickets = new Promise((resolve, reject) => {
-      //   setTimeout(() => {
-      //     // console.log("got the tickets");
-      //     resolve();
-      //   }, 5000);
-      // })
-      //   .then(() => {
-      //     return new Promise((resolve, reject) => {
-      //       setTimeout(() => {
-      //         // console.log("got popcorn");
-      //         resolve();
-      //       }, 5000);
-      //     });
-      //   })
-      //   .then(() => {
-      //     return new Promise((resolve, reject) => {
-      //       setTimeout(() => {
-      //         // console.log("added butter");
-      //         resolve();
-      //       }, 5000);
-      //     });
-      //   });
-      // getTickets.then(() => console.log("all done"));
-
-      // AYNC function always returns a promise
-      const preMovie = async () => {
-        //create 3 promise-->get ticket-->get popcorn-->get butter
-        const getTicket = new Promise((resolve, reject) => {
-          setTimeout(() => {
-            resolve("Got Tickets");
-          }, 5000);
-        });
-        const getPopcorn = new Promise((resolve, reject) => {
-          resolve("Got Popcorn");
-        });
-        const getButter = new Promise((resolve, reject) => {
-          setTimeout(() => {
-            resolve("Got Butter");
-          }, 2000);
-        });
-        //using promise.all
-        let [ticket, popcorn, butter] = await Promise.all([
-          getTicket,
-          getButter,
-          getPopcorn,
-        ]);
-        //getting the result of promises stored
-        // let ticket = await getTicket;
-        // console.log("finally got tickets");
-
-        // let popcorn = await getPopcorn;
-        // console.log("finally got popcorn");
-
-        // let butter = await getButter;
-        // console.log("finally got butter");
-
-        return `${ticket} ${popcorn} ${butter}`;
-      };
-      preMovie()
-        .then((m) => console.log(m))
-        .catch((err) => console.log(err));
-    </script>
+    <h1 class="header text-center bg-primary text-white pt-3 pb-3">
+      Expense tracker
+    </h1>
+    <div class="container">
+      <form id="form" class="mb-5">
+        <div class="row mb-2">
+          <div class="form-group col-md-4">
+            <label for="amount" class="form-label">Expense Amount</label>
+            <input
+              type="number"
+              class="form-control"
+              id="amount"
+              placeholder="Enter Amount"
+              min="0"
+              required
+            />
+          </div>
+          <div class="form-group col-md-4">
+            <label for="details" class="form-label">Expense Details</label>
+            <input
+              type="text"
+              class="form-control"
+              id="details"
+              placeholder="Enter expense details"
+              required
+            />
+          </div>
+          <div class="form-group col-md-4">
+            <label for="category" class="form-label">Expense Category</label>
+            <select id="category" class="form-control" required>
+              <option>Necessary</option>
+              <option>Entertainment</option>
+              <option>Miscellaneous</option>
+            </select>
+          </div>
+        </div>
+        <div class="submit-button text-center">
+          <button class="btn btn-primary" type="submit">Track Expense</button>
+        </div>
+      </form>
+      <ul class="list list-group ml-15 mr-15">
+        <!-- <li class="list-group-item">
+          An item
+          <button type="button" class="btn btn-danger float-end">Delete</button>
+          <button type="button" class="btn btn-light mr-2 float-end">Edit</button>
+        </li> -->
+      </ul>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.1.3/axios.min.js"></script>
+    <script src="app.js"></script>
   </body>
 </html>
