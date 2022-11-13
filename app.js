@@ -1,78 +1,68 @@
-const form = document.querySelector("#new-form");
-const displayOnPage = (obj) => {
-  // console.log(obj);
-  const ul = document.querySelector(".unordered-list");
-  const li = document.createElement("li");
-  const btnEdit = document.createElement("button");
-  const btnDel = document.createElement("button");
-  btnEdit.className = "edit";
-  btnDel.className = "del";
-  btnEdit.innerText = "Edit";
-  btnDel.innerText = "Delete";
-  li.addEventListener("click", (e) => {
-    if (e.target.className == "del") {
-      const userDetails = e.target.parentElement.childNodes[0].textContent; //get the string inside the li
-      Object.keys(localStorage).forEach((key) => {
-        if (userDetails.indexOf(`${key}`) != -1) {
-          localStorage.removeItem(key);
-          e.target.parentElement.remove();
-        }
-      });
-    } else if (e.target.className == "edit") {
-      const name = document.querySelector("#userName");
-      const email = document.querySelector("#email");
-      const userDetails = e.target.parentElement.childNodes[0].textContent;
-      // console.log(userDetails);
-      Object.keys(localStorage).forEach((key) => {
-        if (userDetails.indexOf(`${key}`) != -1) {
-          name.value = JSON.parse(localStorage.getItem(key)).name;
-          email.value = JSON.parse(localStorage.getItem(key)).email;
-          localStorage.removeItem(key);
-          e.target.parentElement.remove();
-        }
-      });
+var form = document.getElementById('addForm');
+var itemList = document.getElementById('items');
+var filter = document.getElementById('filter');
+
+// Form submit event
+form.addEventListener('submit', addItem);
+// Delete event
+itemList.addEventListener('click', removeItem);
+// Filter event
+filter.addEventListener('keyup', filterItems);
+
+// Add item
+function addItem(e) {
+  e.preventDefault();
+
+  // Get input value
+  var newItem = document.getElementById('item').value;
+
+  // Create new li element
+  var li = document.createElement('li');
+  // Add class
+  li.className = 'list-group-item';
+  // Add text node with input value
+  li.appendChild(document.createTextNode(newItem));
+
+  // Create del button element
+  var deleteBtn = document.createElement('button');
+
+  // Add classes to del button
+  deleteBtn.className = 'btn btn-danger btn-sm float-right delete';
+
+  // Append text node
+  deleteBtn.appendChild(document.createTextNode('X'));
+
+  // Append button to li
+  li.appendChild(deleteBtn);
+
+  // Append li to list
+  itemList.appendChild(li);
+}
+
+// Remove item
+function removeItem(e) {
+  if (e.target.classList.contains('delete')) {
+    if (confirm('Are You Sure?')) {
+      var li = e.target.parentElement;
+      itemList.removeChild(li);
+    }
+  }
+}
+
+// Filter Items
+function filterItems(e) {
+  // convert text to lowercase
+  var text = e.target.value.toLowerCase();
+  // Get lis
+  var items = itemList.getElementsByTagName('li');
+  // Convert to an array
+  Array.from(items).forEach(function (item) {
+    var itemName = item.firstChild.textContent;
+    if (itemName.toLowerCase().indexOf(text) != -1) {
+      item.style.display = 'block';
+    } else {
+      item.style.display = 'none';
     }
   });
-
-  li.className = "list";
-  li.appendChild(document.createTextNode(`${obj.name} : ${obj.email}`));
-  li.appendChild(btnDel);
-  li.appendChild(btnEdit);
-  ul.insertAdjacentElement("beforeend", li);
-};
-
-const pageReload = () => {
-  const userDetailsKeys = Object.keys(localStorage);
-  userDetailsKeys.forEach((key) => {
-    displayOnPage(JSON.parse(localStorage.getItem(key))); //each user object
-  });
-};
-
-const onsubmit = (e) => {
-  e.preventDefault();
-  const name = document.querySelector("#userName");
-  const email = document.querySelector("#email");
-  if (name.value == "" || email.value == "") {
-    const msg = document.querySelector(".msg");
-    msg.style.display = "block";
-    setTimeout(() => {
-      msg.style.display = "none";
-    }, 2000);
-  } else {
-    const ul = document.querySelector(".unordered-list");
-    Array.from(ul.children).forEach((li) => {
-      if (li.childNodes[0].textContent.indexOf(email.value) > -1) {
-        li.remove();
-      }
-    });
-    const user = { name: name.value, email: email.value };
-    localStorage.setItem(`${email.value}`, JSON.stringify(user));
-    name.value = "";
-    email.value = "";
-
-    displayOnPage(user);
-  }
-};
-
-document.addEventListener("DOMContentLoaded", pageReload); //DOMContentLoaded is fired when page is reloded
-form.addEventListener("submit", onsubmit);
+}
+//# sourceURL=pen.js
